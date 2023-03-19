@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="files/favicon.ico">
+  <title>NFL Visualization Example</title>
+  <meta name="author" content="Weiyue Li">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="NFL-Players-Viz">
+  <meta property="og:image" content="files/nfl.jpeg">
+  <meta property="og:url" content="https://weiyueli7.github.io/NFL-Players-Viz">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
+  <script src="app.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body onload=project()>
+
+    <div class="header noselect">
+        <div class="content row">
+            <div class="header-profile-picture"></div>
+            <div class="header-text">
+                <div class="header-name">
+                    <h1>NFL Draft Visualization</h1>
+                </div>
+                <div class="header-subtitle">
+                    <a href="https://weiyueli7.github.io/weiyueli.github.io/">Weiyue Li</a>, Undergraduate Student at UC San Diego
+                </div>
+                <div class="header-links">
+                    <a class="btn" href="https://github.com/weiyueli7/NFL-Players-Viz">Source Code💻</a> |
+                    <a class="btn" href="https://www.kaggle.com/datasets/zynicide/nfl-football-player-stats?resource=download&select=profiles_1512362725.022629.json">Data (NFL Players)🏈</a> |
+                    <a class="btn" href="https://developers.google.com/public-data/docs/canonical/states_csv">Data (US-States Location)🇺🇸</a> |
+                    <a class="btn" href="https://github.com/weiyueli7/NFL-Players-Viz/blob/main/data/us-states.json">Data (US-States Geometry)📊</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content" style="padding-bottom: 64px;">
+  <h1>Introduction</h1>
+  <p>
+    Achieving a position on a D1 college football team and subsequently progressing to the NFL represents an aspirational goal for high school varsity football players. During my own tenure as a high school football player, I frequently compared myself to those professional NFL football players occupying equivalent positions on the field and harbored a desire to enhance my own physical stature. While the skills that one brings to a position through talent and dedication may serve as a primary determinant for gaining entry into an NFL team, factors such as body status (including weight and height), college selection, and other considerations may also play a pivotal role in the selection process. Accordingly, I resolved to develop an interactive dashboard for high school varsity football players to acquire a more comprehensive understanding of these critical considerations.
+    <br><br>
+    There were three datasets utilized in the creation of this dashboard, all of which are linked above. The initial dataset comprises NFL player data ranging from the 1940s to 2017, while the second and third datasets contain geometry-related information pertinent to players' respective birth states. The original dataset included a vast array of labels for player positions. To streamline the classification process, I condensed all labels into the primary positions within the offensive, defensive, and special teams units, employing my expertise in football. Subsequently, I handled any missing values within the dataset and merged the various tables using Python, resulting in a much more refined format conducive to the deployment of visualizations within JavaScript. For a more comprehensive understanding of how the dataset was cleaned and processed, kindly refer to the linked source code.
+</p>
+
+<div class="vizodd">   
+  <div id="visualization1"></div>
+  <h2>Question1:<br><br>What are the weight and height patterns among players categorized by position?</h2>
+
+  <p><br>To answer this question, I have created a scatterplot. There are 8 buttons below, and each one will provide the data for the corresponding position.</p>
+
+    <div id="viz1_radio" class="center_plot">
+        <input type="radio" id="v1_qb" name="position" value="QB" checked="checked">
+        <label for="QB">QB</label>
+        <input type="radio" id="v1_wr" name="position" value="WR">
+        <label for="WR">WR</label>
+        <input type="radio" id="v1_rb" name="position" value="RB">
+        <label for="RB">RB</label>
+        <input type="radio" id="v1_te" name="position" value="TE">
+        <label for="TE">TE</label>
+        <input type="radio" id="v1_ol" name="position" value="OL">
+        <label for="OL">OL</label>
+        <input type="radio" id="v1_db" name="position" value="DB">
+        <label for="DB">DB</label>
+        <input type="radio" id="v1_lb" name="position" value="LB">
+        <label for="LB">LB</label>
+        <input type="radio" id="v1_dl" name="position" value="DL">
+        <label for="DL">DL</label>
+    </div>
+
+
+
+<div id="viz1_plot" class="center_plot"></div>
+
+      <table>
+        <caption><strong>Summary of Marks and Channels</strong></caption>
+        <tr>
+          <td><strong>Color Scheme</strong></td>
+          <td><code>d3.schemeCategory10</code>: Categorical</td>
+        </tr>
+        <tr>
+          <td><strong>Marks</strong></td>
+          <td>Points representing individual players in the dataset</td>
+        </tr>
+        <tr>
+          <td><strong>X position channel</strong></td>
+          <td>Encodes the player's height (a continuous variable)</td>
+        </tr>
+        <tr>
+          <td><strong>Y position channel</strong></td>
+          <td>Encodes the player's weight (a continuous variable)</td>
+        </tr>
+        <tr>
+          <td><strong>Color channel</strong></td>
+          <td>Encodes the player's position (a categorical variable)</td>
+        </tr>
+      </table>
+
+<p>Based on the scatterplot presented above, it is evident that there exists a positive correlation between a player's height and weight across all positions in the NFL. Nonetheless, it appears that Defensive Linemen (DL) display the weakest positive correlation among all positions. Furthermore, Quarterbacks (QB) generally exhibit greater height compared to Wide Receivers (WR) and Running Backs (RB), are shorter in stature relative to Tight Ends (TE), and exhibit similar heights to their Offensive Linemen (OL) counterparts. However, it is evident that while QBs share comparable heights with OLs, they typically exhibit less weight to enhance their mobility, whereas OLs require additional weight to bolster their protective capabilities.</p>
+<a href="#top" class="scroll"> back to top </a>
+
+</div>
+
+
+<div class="vizeven"> 
+  <div id="visualization2"></div>
+  <h2>Question2:<br><br>Which colleges have produced a higher number of players drafted in the first round?</h2>
+
+  <p><br>To answer this question, I have created a bar plot that only includes colleges that have had at least 5 players drafted in the first round of NFL drafts in their history. The bar plot below includes an interactive tooltip that shows the exact data when you hover your mouse over a bar.</p>
+
+  <div id="viz2_plot" class="center_plot"></div>
+
+  <table>
+    <caption><strong>Summary of Marks and Channels</strong></caption>
+    <tr>
+      <td><strong>Color Scheme</strong></td>
+      <td><code>d3.interpolateGreens</code>: Sequential (Single-Hue)</td>
+    </tr>
+    <tr>
+      <td><strong>Marks</strong></td>
+      <td>Bars whose height encode the number of players drafted from each college.</td>
+    </tr>
+    <tr>
+      <td><strong>X position channel</strong></td>
+      <td>Encodes the colleges (a categorical variable).</td>
+    </tr>
+    <tr>
+      <td><strong>Y position channel</strong></td>
+      <td>Encodes the number of players drafted (a quantitative variable).</td>
+    </tr>
+    <tr>
+      <th>Color channel</th>
+      <td>Encodes the number of players drafted (a quantitative variable).</td>
+    </tr>
+  </table>
+
+
+  <p>Based on the bar plot presented above, we can clearly see that Ohio State University, the University of Southern California, the University of Miami, the University of Notre Dame, and the University of Alabama are the top five universities that have had the most NFL players drafted in the first round from the 1940s to 2017. This is not surprising because these 5 teams all have a long history and a famous team culture. Therefore, when considering selecting a D1 college program, those schools are all good options because they have the history and connections to help players get higher draft picks.</p>
+  <a href="#top" class="scroll"> back to top </a>
+</div>
+
+
+
+<div class="vizodd"> 
+
+  <div id="visualization3"></div>
+
+  <h2>Question3:<br><br>Do NFL teams prefer certain positions in the draft?</h2>
+
+  <p><br>To answer this question, I have created a heatmap. I assigned a linearly converted draft score based on the draft position, where the higher the score, the earlier a player is drafted. In the heatmap below, each box represents the average draft score of the corresponding team for drafting the corresponding position. The heatmap includes an interactive tooltip that shows the exact average draft score when you hover your mouse over a box.</p>
+
+  <div id="viz3_plot" class="center_plot"></div>
+
+  <table>
+    <caption><strong>Summary of Marks and Channels</strong></caption>
+    <tr>
+      <td><strong>Color Scheme</strong></td>
+      <td><code>d3.interpolateBlues</code>: Sequential (Single-Hue)</td>
+    </tr>
+    <tr>
+      <th>Marks</th>
+      <td>Boxes whose color encodes the average draft score of <br>the corresponding team for the corresponding position.</td>
+    </tr>
+    <tr>
+      <th>X position channel</th>
+      <td>Encodes the player's position (categorical variable).</td>
+    </tr>
+    <tr>
+      <th>Y position channel</th>
+      <td>Encodes the team (categorical variable).</td>
+    </tr>
+    <tr>
+      <th>Color channel</th>
+      <td>Encodes the average draft score (continuous variable).</td>
+    </tr>
+  </table>
+
+  <p>Based on the heatmap presented above, it is evident that the graph corresponds to external knowledge. For instance, the Green Bay Packers are renowned for their aversion to selecting wide receivers early in the draft to support their long-term quarterbacks. The heatmap reflects this stance, as the WR position exhibits one of the lowest draft scores for the Packers among all positions. Conversely, the heatmap illustrates that both the Jacksonville Jaguars and Cincinnati Bengals exhibit a tendency to select quarterbacks early in the draft. Although this pattern is not captured in the data used in this visualization, it is consistent with their recent decision to draft Trevor Lawrence and Joe Burrow in the first overall pick.</p>
+  <a href="#top" class="scroll"> back to top </a>
+
+</div>
+
+
+
+
+<div class="vizeven"> 
+  <div id="visualization4"></div>
+  <h2>Question4:<br><br>Which states have produced the most NFL players?</h2>
+
+  <p><br>To answer this question, I created a geomap to display the number of NFL players born in each state. I did this because certain states may have a stronger football culture for middle and high school players, providing them with a greater chance of being recruited by D1 football programs and eventually getting drafted by an NFL team. The geomap also includes an interactive tooltip that shows the exact number of players when you hover your mouse over a state.</p>
+
+
+  <div id="viz4_plot" class="center_plot"></div>
+
+
+  <table>
+    <caption><strong>Summary of Marks and Channels</strong></caption>
+    <tr>
+      <td><strong>Color Scheme</strong></td>
+      <td><code>d3.interpolateBlues</code>: Sequential (Single-Hue)</td>
+    </tr>
+    <tr>
+      <th>Marks</th>
+      <td>Geographical map of the US states.</td>
+    </tr>
+    <tr>
+      <th>Color channel</th>
+      <td>Encodes the number of NFL players born in each state.<br>Darker color represents more players.</td>
+    </tr>
+    <tr>
+      <th>Size channel</th>
+      <td>Encodes the number of NFL players born in each state.<br>A larger NFL logo represents more players.</td>
+    </tr>
+  </table>
+
+
+
+  <p>Based on the geomap presented above, it is clear that states such as Texas, California, and Florida have the highest number of NFL players born. Generally, the southern and midwestern states have a stronger football culture, which correlates with the larger number of NFL players they produce. Therefore, if someone wants to play professional football, considering a move to those states and getting exposed to their football culture as early as possible could increase their chances of playing professionally in the future.</p>
+  <a href="#top" class="scroll"> back to top </a>
+
+</div>
+
+
+
+
+<div class="vizodd"> 
+  <div id="visualization5"></div>
+  <h2>Question5:<br><br>What is the typical salary range for active NFL players?</h2>
+
+  <p><br>To answer this question, I created a boxplot to display the salary range for active NFL players. Since salaries can vary by position, the boxplot includes an interactive dropdown menu that allows users to select a specific position and display the corresponding salary range for active players.</p>
+
+
+
+  <strong>Select a position to view the salary range of active players:</strong>
+  <select id="d3-dropdown">
+    <option value="All">All</option>
+    <option value="QB">QB</option>
+    <option value="WR">WR</option>
+    <option value="RB">RB</option>
+    <option value="TE">TE</option>
+    <option value="OL">OL</option>
+    <option value="DB">DB</option>
+    <option value="LB">LB</option>
+    <option value="DL">DL</option>
+  </select>
+
+  <div id="viz5_plot" class="center_plot"></div>
+
+
+  <table>
+    <caption><strong>Summary of Marks and Channels</strong></caption>
+    <tr>
+      <td><strong>Color Scheme</strong></td>
+      <td><code>d3.schemeCategory10</code>: Categorical</td>
+    </tr>
+    <tr>
+      <th>Marks</th>
+      <td>Boxes that encode the 25th and 75th quartiles and median salary values.<br>Whiskers that encode the cutoff for outliers.<br>Points that encode individual players in the dataset.</td>
+    </tr>
+    <tr>
+      <th>X position channel</th>
+      <td>Encodes the salary for NFL players.</td>
+    </tr>
+    <tr>
+      <th>Color channel</th>
+      <td>Encodes the position of NFL players.</td>
+    </tr>
+  </table>
+
+  
+
+
+  <p>Based on the boxplot presented above, it is clear that salaries do vary by position. It is not surprising that quarterbacks (QBs) make the most among all positions, followed by both offensive and defensive linemen. It is also not surprising that tight ends (TEs) usually make more than wide receivers (WRs) because it is harder to find someone who is big and tall yet still has the mobility and athleticism required for the TE position. However, the outliers for WRs make much more than the outliers for TEs because WRs are much more likely to become stars. Therefore, the takeaway for youth football players is this: if you have arm talent, try your best to become a QB; if you are big, become a lineman; otherwise, try your best to become the best skill player you can be.</p>
+  <a href="#top" class="scroll"> back to top </a>
+
+</div>
+
+  <h1>Conclusion</h1>
+  That's it for this visualization project! Some key takeaways are:
+  <ul>
+    <li>You don't have to be 6 feet tall to become an NFL player. Players' body weights vary, so don't try to follow a guideline for a "perfect" body shape. Instead, work out as hard as you can and focus more on athleticism.</li>
+    <li>Some college football programs in the US have a long history of preparing players to play in the NFL. When considering a D1 program, also consider their connections and culture.</li>
+    <li>Many teams have preferences for drafting specific positions. When preparing for the NFL draft, you may want to contact teams that typically like to draft players from your position so that scouts might notice you before the NFL combine if you're not that well-known.</li>
+    <li>Some states in the United States have stronger football culture. If you or your children dream of pursuing a career as a professional football player, you might want to consider moving to those states so that you or your children can get exposed to more advanced early programs.</li>
+    <li>Some positions make more money than others. When choosing your or your children's position to play at a younger age, consider this factor as well.</li>
+  </ul>
+</div>
+</body>
+</html>
+

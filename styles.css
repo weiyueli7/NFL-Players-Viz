@@ -1,0 +1,116 @@
+.center_plot {
+  margin: auto; 
+  text-align: center;
+}
+
+.vizodd {
+    /* border: 1px solid #234; */
+    background-color: rgb(248, 248, 248);
+    padding: 20px;
+    margin-top: 10px;
+    width: 100%;
+    height: 100%;
+  }
+
+.vizeven {
+    /* border: 1px solid #234; */
+    background-color: #e2e1e1bb;
+    padding: 20px;
+    margin-top: 10px;
+    width: 100%;
+    height: 100%;
+  }
+
+div.tooltip{
+    position: absolute;
+    text-align: left;
+    width: "fit-content";
+    height: "fit-content";
+    padding: 5px;
+    background: #fdfdfd;
+    pointer-events: none;
+    }
+
+#player-name{
+  width: 180px;
+}
+
+table, th, td {
+  border: 1px solid;
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #fdfdfd; 
+  color: #234; 
+  margin: 0; 
+  font-size: 14px;}
+h1 {
+  margin-bottom: 32px; 
+  font-size: 40px;}
+h2 {
+  margin-top: 0px; 
+  font-size: 20px;}
+h1, h2 {
+  color: #234;
+}
+h1, h2, a, p, span, body, div {
+  font-weight: normal; 
+  font-family: 'Lato', 
+  Verdana, Helvetica, sans-serif;
+}
+.header {
+  background: linear-gradient(to bottom right, #fdfdfd 10%, #f4f4f8 90%); 
+  width: 100%; 
+  padding-top: 16px; 
+  padding-bottom: 32px; 
+  text-align: center;
+}
+.header-profile-picture, .header-text {
+  display: inline-block;
+}
+.header-name h1 {
+  margin: 0;
+}
+.header-subtitle {
+  margin-bottom: 12px;
+}
+.header-profile-picture {
+  width: 130px; 
+  height: 130px; 
+  margin-right: 20px; 
+  border-radius: 100%; 
+  background-image: url(files/nfl.jpeg); 
+  background-position: center; 
+  background-size: contain;
+}
+.content {
+  max-width: 850px; 
+  padding-left: 5px; 
+  padding-right: 5px; 
+  margin: auto; 
+  margin-top: 48px;
+}
+a {
+  color: #2471a3; 
+  text-decoration: none;
+}
+a:focus, a:hover {
+  color: #ef8307;
+}
+p {
+  line-height: 1.5em;
+}
+@media only screen and (max-width: 1150px) {
+    .header-profile-picture, .header-text {display: block; margin: auto; text-align: center;}
+    .header-profile-picture {margin-bottom: 12px; width: 140px; height: 140px;}
+    body {font-size: 18px;}
+    a.btn {font-size: 14px; padding: 2px 6px;}
+}
+
